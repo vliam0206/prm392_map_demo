@@ -5,6 +5,7 @@ Done| Task | Name | Status
 ----| ---- | ---- | ---
 [x] | Embed Google map api (view only) | Lam | Done
 [] | Display current location in map view | Lam | On-going
+[x] | Map Marker | Thong | Done
 [] | [Your task here] | [Your name] | [Status]
 ...| ... | ... | ...
 ## Team member

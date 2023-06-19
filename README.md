@@ -1,7 +1,7 @@
 # PRM392 - Map Demo Project - Group 1
 Note: Mọi người tự chọn task và ghi vào đây nha. (mỗi người ÍT NHẤT 1 TASK liên quan tới map)
 ## What's on this project:
-Done| Task | Name | Status
+Done| Task | Name | Status6
 ----| ---- | ---- | ---
 [x] | Embed Google map api (view only) | Lam | Done
 [] | Display current location in map view | Lam | On-going

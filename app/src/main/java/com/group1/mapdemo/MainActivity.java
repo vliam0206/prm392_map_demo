@@ -15,6 +15,7 @@ import android.view.WindowManager;
 import android.Manifest;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 // Import google map libaries
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     GoogleMap mMap;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private SupportMapFragment mapFragment;
-    Button btnZoomIn,btnZoomOut,btnSearch,btnCurrent;
+    ImageButton btnZoomIn,btnZoomOut,btnSearch,btnCurrent;
     EditText et;
 
     @Override
@@ -76,8 +77,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }).check();
 
         mapFragment.getMapAsync(this);
-        btnZoomIn = (Button) findViewById(R.id.zoomin);
-        btnZoomOut =(Button) findViewById(R.id.zoomout);
+        btnZoomIn = (ImageButton) findViewById(R.id.zoomin);
+        btnZoomOut =(ImageButton) findViewById(R.id.zoomout);
         btnZoomIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 mMap.moveCamera(CameraUpdateFactory.zoomOut());
             }
         });
-        btnSearch = (Button) findViewById(R.id.btnSearch);
+        btnSearch = (ImageButton) findViewById(R.id.btnSearch);
         et = (EditText) findViewById(R.id.et_location);
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
             }
         });
-        btnCurrent = (Button) findViewById(R.id.btn_current);
+        btnCurrent = (ImageButton) findViewById(R.id.btn_current);
         btnCurrent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

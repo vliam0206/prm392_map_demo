@@ -19,12 +19,15 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 // Import google map libaries
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -39,14 +42,16 @@ import java.io.IOException;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMarkerDragListener, LocationListener {
     GoogleMap mMap;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private SupportMapFragment mapFragment;
-
     ImageButton btnZoomIn,btnZoomOut,btnSearch,btnCurrent, btnDistance;
 
     EditText et;
+    double latitude, longitude;
+    double endLatitude, endLongitude;
+    private Marker currentLocationMarker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,6 +179,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 mapFragment.getMapAsync(new OnMapReadyCallback() {
                     @Override
                     public void onMapReady(@NonNull GoogleMap googleMap) {
+                        mMap.setOnMarkerClickListener(MainActivity.this);
+                        mMap.setOnMarkerDragListener(MainActivity.this);
                         if (location != null) {
                             LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
                             MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("Your current Location");
@@ -191,8 +198,45 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setOnMarkerClickListener(this);
+        mMap.setOnMarkerDragListener(this);
         // Use the GoogleMap object to perform map-related operations
         // For example, you can add markers, set camera position, etc.
         // Refer to the Google Maps Android API documentation for more details.
+    }
+
+    @Override
+    public void onLocationChanged(@NonNull Location location) {
+
+    }
+
+    @Override
+    public boolean onMarkerClick(@NonNull Marker marker) {
+        marker.setDraggable(true);
+        latitude = marker.getPosition().latitude;
+        longitude = marker.getPosition().longitude;
+        return false;
+    }
+
+    @Override
+    public void onMarkerDrag(@NonNull Marker marker) {
+
+    }
+
+    @Override
+    public void onMarkerDragEnd(@NonNull Marker marker) {
+        endLatitude = marker.getPosition().latitude;
+        endLongitude = marker.getPosition().longitude;
+        LatLng latLng = new LatLng(latitude, longitude);
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(latLng);
+        markerOptions.title("Location");
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+        currentLocationMarker = mMap.addMarker(markerOptions);
+    }
+
+    @Override
+    public void onMarkerDragStart(@NonNull Marker marker) {
+
     }
 }

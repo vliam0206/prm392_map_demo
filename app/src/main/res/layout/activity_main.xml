@@ -7,16 +7,22 @@
     tools:context=".MainActivity"
     android:orientation="vertical">
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="12"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_marginTop="10dp">
 
         <EditText
             android:id="@+id/et_location"
-            android:layout_width="317dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="25dp"
-            android:hint="Search here" />
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="8"
+            android:hint="Search here"
+            android:paddingStart="10dp"/>
 
 <!--        <Button-->
 <!--            android:id="@+id/btnSearch"-->
@@ -27,16 +33,20 @@
 
         <ImageButton
             android:id="@+id/btnSearch"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:srcCompat="?android:attr/actionModeWebSearchDrawable" />
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="2"
+            android:src="@drawable/search"
+            android:backgroundTint="#0D000000"/>
+        <ImageButton
+            android:id="@+id/btnDistance"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="2"
+            android:src="@drawable/distance"
+            android:backgroundTint="#0D000000"/>
     </LinearLayout>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnDistance"
-        android:layout_marginLeft="21dp"
-        android:text="Distance"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,7 +57,7 @@
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="500dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="5dp"/>
@@ -80,19 +90,22 @@
                 android:id="@+id/zoomin"
                 android:layout_width="100dp"
                 android:layout_height="52dp"
-                app:srcCompat="@drawable/ic_zoom_in_foreground" />
+                android:src="@drawable/zoomin"
+                android:backgroundTint="#0D000000"/>
 
             <ImageButton
                 android:id="@+id/btn_current"
                 android:layout_width="100dp"
                 android:layout_height="52dp"
-                app:srcCompat="@drawable/ic_location_pin_foreground" />
+                android:src="@drawable/location"
+                android:backgroundTint="#0D000000"/>
 
             <ImageButton
                 android:id="@+id/zoomout"
                 android:layout_width="100dp"
                 android:layout_height="52dp"
-                app:srcCompat="@drawable/ic_zoom_out_foreground" />
+                android:src="@drawable/zoomout"
+                android:backgroundTint="#0D000000"/>
 
         </LinearLayout>
     </LinearLayout>

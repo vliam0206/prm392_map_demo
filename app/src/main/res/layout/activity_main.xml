@@ -10,12 +10,24 @@
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_width="1dp"
+        android:layout_height="10dp"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"/>
 
 <!--    some other elements here-->
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:apiKey="AIzaSyD5u5YJWWfW76EHkoNaxV63kvNaofO1WMU"
+        tools:context=".MainActivity" />
+
+<!--    <Button-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Marker"-->
+<!--        android:id="@+id/btnMarker"></Button>-->
 
 </LinearLayout>

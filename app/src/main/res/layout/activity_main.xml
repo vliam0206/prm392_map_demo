@@ -46,7 +46,6 @@
             android:src="@drawable/distance"
             android:backgroundTint="#0D000000"/>
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

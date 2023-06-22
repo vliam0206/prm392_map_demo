@@ -4,10 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 // Import other libraries
 import android.view.View;
@@ -18,6 +21,12 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 // Import google map libaries
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationServices;
@@ -30,6 +39,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.karumi.dexter.Dexter;
@@ -39,8 +49,14 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMarkerDragListener, LocationListener, GoogleMap.OnMapClickListener {
@@ -48,13 +64,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private FusedLocationProviderClient fusedLocationProviderClient;
     private SupportMapFragment mapFragment;
     ImageButton btnZoomIn,btnZoomOut,btnSearch,btnCurrent, btnDistance;
+    Button test;
 
-    EditText et;
+    EditText et,fromEt,toEt;
     double latitude, longitude;
     double endLatitude, endLongitude;
     private Marker currentLocationMarker;
     private Marker userMarker;
     LatLng curentLocation;
+    LatLng destination,origin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 if(!location.trim().equals("")){
                     Geocoder geocoder = new Geocoder(MainActivity.this);
                     try {
-                        addressList = geocoder.getFromLocationName(location,5);
+                        addressList = geocoder.getFromLocationName(location,1);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -128,7 +146,39 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         mMap.addMarker(mo);
                         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                     }
+                    destination = new LatLng(addressList.get(0).getLatitude(),addressList.get(0).getLongitude());
+                    origin = curentLocation;
                 }
+            }
+        });
+        test = (Button) findViewById(R.id.btnTest);
+        fromEt = (EditText) findViewById(R.id.et_from);
+        toEt = (EditText)findViewById(R.id.et_to);
+        test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               if((fromEt.getText().toString().trim().equalsIgnoreCase("") || toEt.getText().toString().trim().equalsIgnoreCase("")) && !et.getText().toString().trim().equals("") ){
+                   et.setText("");
+                   Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr=" + origin.latitude+ "," + origin.longitude + "&daddr=" + destination.latitude + "," + destination.longitude));
+                   startActivity(intent);
+               }
+               if(!fromEt.getText().toString().trim().equalsIgnoreCase("") && ! toEt.getText().toString().trim().equalsIgnoreCase("")){
+                   String from = fromEt.getText().toString();
+                   String to = toEt.getText().toString();
+                   Geocoder geocoder = new Geocoder(MainActivity.this);
+                   try {
+                       fromEt.setText("");
+                       toEt.setText("");
+                       List<Address> fromAddress = geocoder.getFromLocationName(from,1);
+                       List<Address> toAddress = geocoder.getFromLocationName(to,1);
+                       LatLng fromLatLng = new LatLng(fromAddress.get(0).getLatitude(),fromAddress.get(0).getLongitude());
+                       LatLng toLatLng = new LatLng(toAddress.get(0).getLatitude(),toAddress.get(0).getLongitude());
+                       Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr=" + fromLatLng.latitude+ "," + fromLatLng.longitude + "&daddr=" + toLatLng.latitude + "," + toLatLng.longitude));
+                       startActivity(intent);
+                   } catch (IOException e) {
+                       throw new RuntimeException(e);
+                   }
+               }
             }
         });
         btnCurrent = (ImageButton) findViewById(R.id.btn_current);
@@ -224,7 +274,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         Marker marker = mMap.addMarker(markerOptions);
         marker.showInfoWindow();
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 12));
-
     }
 
     @Override
@@ -271,6 +320,5 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         userMarker = mMap.addMarker(markerOptions);
         userMarker.showInfoWindow();
         mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-
     }
 }

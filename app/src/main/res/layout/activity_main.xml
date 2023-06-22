@@ -4,17 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="12"
+        android:layout_marginTop="10dp"
         android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:layout_marginTop="10dp">
+        android:weightSum="12">
 
         <EditText
             android:id="@+id/et_location"
@@ -22,118 +23,111 @@
             android:layout_height="50dp"
             android:layout_weight="8"
             android:hint="Search here"
-            android:paddingStart="10dp"/>
-<!--        <Button-->
-<!--            android:id="@+id/btnSearch"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:visibility="gone"-->
-<!--            tools:visibility="gone" />-->
+            android:paddingStart="10dp" />
 
         <ImageButton
             android:id="@+id/btnSearch"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="2"
-            android:src="@drawable/search"
-            android:backgroundTint="#0D000000"/>
+            android:backgroundTint="#0D000000"
+            android:src="@drawable/search" />
+
         <ImageButton
             android:id="@+id/btnDistance"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="2"
-            android:src="@drawable/distance"
-            android:backgroundTint="#0D000000"/>
+            android:backgroundTint="#0D000000"
+            android:src="@drawable/distance" />
     </LinearLayout>
+
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
-        >
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:weightSum="12">
+
         <EditText
             android:id="@+id/et_from"
-            android:layout_width="200dp"
+            android:layout_width="0dp"
             android:layout_height="50dp"
-            android:layout_weight="8"
-            android:hint="From"
-            android:paddingStart="10dp"
-            android:layout_marginLeft="20dp"
-            />
+            android:layout_weight="5"
+            android:hint="From" />
+
         <EditText
             android:id="@+id/et_to"
-            android:layout_width="200dp"
+            android:layout_width="0dp"
             android:layout_height="50dp"
-            android:layout_weight="8"
-            android:hint="To"
-            android:paddingStart="10dp"
-            android:layout_marginLeft="20dp"
-            />
+            android:layout_weight="5"
+            android:hint="To" />
+
+        <ImageButton
+            android:id="@+id/btnTest"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="2"
+            android:backgroundTint="#0D000000"
+            android:src="@drawable/direction" />
     </LinearLayout>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Direction"
-        android:id="@+id/btnTest"
-        android:layout_marginLeft="20dp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <fragment
-            android:id="@+id/map"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
+        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="500dp"
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
-            android:layout_marginBottom="5dp"/>
+            android:layout_marginBottom="5dp">
+
+            <fragment
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <View
+                android:id="@+id/outline_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/outline_background" />
+
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_horizontal">
-            <!--      <Button-->
-            <!--          android:id="@+id/zoomin"-->
-            <!--          android:layout_width="110dp"-->
-            <!--          android:layout_height="wrap_content"-->
-            <!--          android:text="Zoom In"-->
-            <!--          android:layout_marginLeft="20dp"-->
-            <!--          />-->
-            <!--      <Button-->
-            <!--          android:id="@+id/btn_current"-->
-            <!--          android:layout_width="wrap_content"-->
-            <!--          android:layout_height="wrap_content"-->
-            <!--          android:text="currentlocation"/>-->
-
-            <!--      <Button-->
-            <!--          android:id="@+id/zoomout"-->
-            <!--          android:layout_width="wrap_content"-->
-            <!--          android:layout_height="wrap_content"-->
-            <!--          android:text="Zoom Out" />-->
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
 
             <ImageButton
                 android:id="@+id/zoomin"
                 android:layout_width="100dp"
                 android:layout_height="52dp"
-                android:src="@drawable/zoomin"
-                android:backgroundTint="#0D000000"/>
+                android:backgroundTint="#0D000000"
+                android:src="@drawable/zoomin" />
 
             <ImageButton
                 android:id="@+id/btn_current"
                 android:layout_width="100dp"
                 android:layout_height="52dp"
-                android:src="@drawable/location"
-                android:backgroundTint="#0D000000"/>
+                android:backgroundTint="#0D000000"
+                android:src="@drawable/location" />
 
             <ImageButton
                 android:id="@+id/zoomout"
                 android:layout_width="100dp"
                 android:layout_height="52dp"
-                android:src="@drawable/zoomout"
-                android:backgroundTint="#0D000000"/>
+                android:backgroundTint="#0D000000"
+                android:src="@drawable/zoomout" />
 
         </LinearLayout>
     </LinearLayout>

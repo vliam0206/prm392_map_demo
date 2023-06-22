@@ -135,19 +135,22 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     Geocoder geocoder = new Geocoder(MainActivity.this);
                     try {
                         addressList = geocoder.getFromLocationName(location,1);
+                        if(addressList.size() == 0){
+                            throw new IOException();
+                        }
+                        for (int i=0;i<addressList.size();i++){
+                            Address myAddress = addressList.get(i);
+                            LatLng latLng = new LatLng(myAddress.getLatitude(),myAddress.getLongitude());
+                            mo.position(latLng);
+                            mo.title("Your search result");
+                            mMap.addMarker(mo);
+                            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                        }
+                        destination = new LatLng(addressList.get(0).getLatitude(),addressList.get(0).getLongitude());
+                        origin = curentLocation;
                     } catch (IOException e) {
-                        throw new RuntimeException(e);
+                        notification("No location matched");
                     }
-                    for (int i=0;i<addressList.size();i++){
-                        Address myAddress = addressList.get(i);
-                        LatLng latLng = new LatLng(myAddress.getLatitude(),myAddress.getLongitude());
-                        mo.position(latLng);
-                        mo.title("Your search result");
-                        mMap.addMarker(mo);
-                        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                    }
-                    destination = new LatLng(addressList.get(0).getLatitude(),addressList.get(0).getLongitude());
-                    origin = curentLocation;
                 }
             }
         });
@@ -171,12 +174,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                        toEt.setText("");
                        List<Address> fromAddress = geocoder.getFromLocationName(from,1);
                        List<Address> toAddress = geocoder.getFromLocationName(to,1);
+                       if(fromAddress.size() == 0 || toAddress.size() == 0){
+                           throw new IOException();
+                       }
                        LatLng fromLatLng = new LatLng(fromAddress.get(0).getLatitude(),fromAddress.get(0).getLongitude());
                        LatLng toLatLng = new LatLng(toAddress.get(0).getLatitude(),toAddress.get(0).getLongitude());
                        Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr=" + fromLatLng.latitude+ "," + fromLatLng.longitude + "&daddr=" + toLatLng.latitude + "," + toLatLng.longitude));
                        startActivity(intent);
                    } catch (IOException e) {
-                       throw new RuntimeException(e);
+                       notification("No location matched");
                    }
                }
             }
@@ -320,5 +326,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         userMarker = mMap.addMarker(markerOptions);
         userMarker.showInfoWindow();
         mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+    }
+    public void notification(String message){
+        Toast.makeText(MainActivity.this,message,Toast.LENGTH_SHORT).show();
     }
 }

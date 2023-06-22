@@ -153,6 +153,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     }catch (IllegalArgumentException e){
                         setNotification("Invalid input");
                     }
+                    destination = new LatLng(addressList.get(0).getLatitude(),addressList.get(0).getLongitude());
+                    origin = curentLocation;
                 }
             }
         });
@@ -187,6 +189,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                        setNotification("Not found any matched");
                    } catch (IllegalArgumentException e){
                        setNotification("Invalid input");
+                       throw new RuntimeException(e);
                    }
                }
             }

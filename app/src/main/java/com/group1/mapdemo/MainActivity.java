@@ -63,9 +63,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     GoogleMap mMap;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private SupportMapFragment mapFragment;
-    ImageButton btnZoomIn,btnZoomOut,btnSearch,btnCurrent, btnDistance;
-    Button test;
-
+    ImageButton btnZoomIn,btnZoomOut,btnSearch,btnCurrent, btnDistance, test;
     EditText et,fromEt,toEt;
     double latitude, longitude;
     double endLatitude, endLongitude;
@@ -154,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
             }
         });
-        test = (Button) findViewById(R.id.btnTest);
+        test = (ImageButton) findViewById(R.id.btnTest);
         fromEt = (EditText) findViewById(R.id.et_from);
         toEt = (EditText)findViewById(R.id.et_to);
         test.setOnClickListener(new View.OnClickListener() {
